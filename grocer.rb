@@ -30,7 +30,7 @@ def consolidate_cart(cart)
 end	
 
 def apply_coupons(cart, coupons)
-   coupons_index = 0
+    coupons_index = 0
 
   while coupons_index < coupons.size do
     current_coupon = coupons[coupons_index]
@@ -46,7 +46,8 @@ def apply_coupons(cart, coupons)
     coupons_index += 1
   end
   cart
-end		  
+end	
+
 
 def apply_clearance(cart)
    count = 0
