@@ -1,4 +1,4 @@
-
+require 'random_grocery_generator'
 
 def find_item_by_name_in_collection(name, collection)
   counter=0 
