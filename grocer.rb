@@ -10,7 +10,12 @@ def find_item_by_name_in_collection(name, collection)
 end
 
 def consolidate_cart(cart)
+  new_cart=[]
+  counter = 0 
   
+  while counter< new_cart.length do 
+    new_cart|counter|
+    counter +=1
 end
 
 def apply_coupons(cart, coupons)
