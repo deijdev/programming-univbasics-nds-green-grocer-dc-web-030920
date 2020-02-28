@@ -24,21 +24,30 @@ def consolidate_cart(cart)
 end	
 
 def apply_coupons(cart, coupons)
-  counter = 0 
-  
-  while counter < coupons.length
-  cart_item=find_item_by_name_in_collection(coupons[counter][:item], cart)
-  couponed_item_name= "#{coupons[:counter][:item]} W/ COUPON"
-  cart_item_with_coupon = find_item_by_name_in_collection(couponed_item_name, cart)
-  if cart_item && cart_item[:count]>= coupons[counter][:num]
-    if cart_item_with_coupon
-      cart_item_with_coupon[:count] += 1 
+  coupCart = cart
+  count = 0
+  while coupons[count] do
+    if cart[coupons[count][:item]]
+      if cart[coupons[count][:item]][:count] >= coupons[count][:num]
+        coupCart[coupons[count][:item]][:count] = coupCart[coupons[count][:item]][:count] - coupons[count][:num]
+        coupItem = "#{coupons[count][:item]} W/COUPON"
+        coupPrice = coupons[count][:cost] / coupons[count][:num]
+        if coupCart[coupItem]
+          coupCount = coupCart[coupItem][:count] + coupons[count][:num]
+        else
+          coupCount = coupons[count][:num]
+        end
+        coupCart[coupItem] = {:price => coupPrice, :clearance => coupCart[coupons[count][:item]][:clearance], :count => coupCount}
+        count += 1
+      else
+        count += 1
+      end
+    else
+      count += 1
     end
   end
-  
-  counter +=1
-end
-end
+  coupCart
+end	  
 
 def apply_clearance(cart)
   # Consult README for inputs and outputs
