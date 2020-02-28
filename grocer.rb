@@ -20,6 +20,7 @@ def consolidate_cart(cart)
     else
       new_cart_item= {
        :item=> cart[counter][:name]
+       :price=> cart[counter][]
       }
   end
     
