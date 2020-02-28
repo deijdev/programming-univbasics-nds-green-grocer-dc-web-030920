@@ -29,6 +29,7 @@ def consolidate_cart(cart)
     
     counter +=1
 end
+end
 
 def apply_coupons(cart, coupons)
   # Consult README for inputs and outputs
