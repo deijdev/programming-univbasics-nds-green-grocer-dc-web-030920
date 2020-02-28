@@ -30,30 +30,23 @@ def consolidate_cart(cart)
 end	
 
 def apply_coupons(cart, coupons)
-  coupCart = cart
-  count = 0
-  while coupons[count] do
-    if cart[coupons[count][:item]]
-      if cart[coupons[count][:item]][:count] >= coupons[count][:num]
-        coupCart[coupons[count][:item]][:count] = coupCart[coupons[count][:item]][:count] - coupons[count][:num]
-        coupItem = "#{coupons[count][:item]} W/COUPON"
-        coupPrice = coupons[count][:cost] / coupons[count][:num]
-        if coupCart[coupItem]
-          coupCount = coupCart[coupItem][:count] + coupons[count][:num]
-        else
-          coupCount = coupons[count][:num]
-        end
-        coupCart[coupItem] = {:price => coupPrice, :clearance => coupCart[coupons[count][:item]][:clearance], :count => coupCount}
-        count += 1
-      else
-        count += 1
+   coupons_index = 0
+
+  while coupons_index < coupons.size do
+    current_coupon = coupons[coupons_index]
+    applicable_for_discount = find_item_by_name_in_collection( current_coupon[:item], cart )
+      if ( applicable_for_discount[:count] / current_coupon[:num] >= 1 )
+        cart.push( {:item => "#{current_coupon[:item]} W/COUPON",
+                    :price => (current_coupon[:cost] / current_coupon[:num]).round(2),
+                    :clearance => applicable_for_discount[:clearance],
+                    :count => applicable_for_discount[:count] - ( applicable_for_discount[:count] % current_coupon[:num])})
+
+        applicable_for_discount[:count] %= current_coupon[:num]
       end
-    else
-      count += 1
-    end
+    coupons_index += 1
   end
-  coupCart
-end	  
+  cart
+end		  
 
 def apply_clearance(cart)
    count = 0
